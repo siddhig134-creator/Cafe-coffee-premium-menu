@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Cafe - Premium Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c1810 0%, #4a3528 100%);
+            color: #f4f1eb;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(244, 241, 235, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #f4f1eb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: 
+                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23654321" width="1200" height="800"/><circle cx="600" cy="300" r="100" fill="%238B4513" opacity="0.3"/><circle cx="300" cy="500" r="80" fill="%23A0522D" opacity="0.2"/><circle cx="900" cy="600" r="120" fill="%23CD853F" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(44, 24, 16, 0.3) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, #d4af37, #f4d03f);
+            color: #2c1810;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .menu-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #d4af37;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .menu-category {
+            background: rgba(244, 241, 235, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(244, 241, 235, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+        }
+
+        .menu-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(244, 241, 235, 0.08);
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(244, 241, 235, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            padding-left: 10px;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 10px;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .item-info h3 {
+            color: #f4f1eb;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            font-weight: 400;
+        }
+
+        .item-description {
+            color: rgba(244, 241, 235, 0.7);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .item-price {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .coffee-bean {
+            position: absolute;
+            color: rgba(212, 175, 55, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .coffee-bean:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .coffee-bean:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .coffee-bean:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .footer {
+            background: rgba(44, 24, 16, 0.9);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(244, 241, 235, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .footer p {
+            color: rgba(244, 241, 235, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: #d4af37;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: #f4d03f;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .menu-category {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="coffee-bean"><i class="fas fa-seedling fa-2x"></i></div>
+        <div class="coffee-bean"><i class="fas fa-coffee fa-2x"></i></div>
+        <div class="coffee-bean"><i class="fas fa-leaf fa-2x"></i></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-coffee"></i>
+                Coffee Cafe
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Coffee Cafe</h1>
+            <p>Experience the perfect blend of premium coffee, artisanal treats, and cozy atmosphere. Every cup tells a story, every sip creates memories.</p>
+            <a href="#menu" class="cta-button">Explore Our Menu</a>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <h2 class="section-title">Our Premium Menu</h2>
+        
+        <div class="menu-grid">
+            <div class="menu-category">
+                <h3 class="category-title">
+                    <i class="fas fa-coffee"></i>
+                    Espresso
+                </h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Cafe Latte</h3>
+                        <p class="item-description">Rich espresso with steamed milk foam</p>
+                    </div>
+                    <div class="item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Cafe Mocha</h3>
+                        <p class="item-description">Espresso with chocolate and whipped cream</p>
+                    </div>
+                    <div class="item-price">$5.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Caramel Macchiato</h3>
+                        <p class="item-description">Espresso with caramel and steamed milk</p>
+                    </div>
+                    <div class="item-price">$2.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Cafe Americano</h3>
+                        <p class="item-description">Classic espresso with hot water</p>
+                    </div>
+                    <div class="item-price">$2.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Cappuccino</h3>
+                        <p class="item-description">Perfect balance of espresso and foam</p>
+                    </div>
+                    <div class="item-price">$2.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Double Espresso</h3>
+                        <p class="item-description">Intense double shot for true coffee lovers</p>
+                    </div>
+                    <div class="item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Espresso</h3>
+                        <p class="item-description">Pure, concentrated coffee experience</p>
+                    </div>
+                    <div class="item-price">$1.50</div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3 class="category-title">
+                    <i class="fas fa-snowflake"></i>
+                    Iced Beverages
+                </h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Iced Coffee</h3>
+                        <p class="item-description">Refreshing cold brew over ice</p>
+                    </div>
+                    <div class="item-price">$3.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Iced Tea</h3>
+                        <p class="item-description">Premium tea served ice cold</p>
+                    </div>
+                    <div class="item-price">$4.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Mocha Latte</h3>
+                        <p class="item-description">Iced chocolate coffee delight</p>
+                    </div>
+                    <div class="item-price">$5.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Frappe Latte</h3>
+                        <p class="item-description">Blended iced coffee perfection</p>
+                    </div>
+                    <div class="item-price">$5.00</div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3 class="category-title">
+                    <i class="fas fa-hamburger"></i>
+                    Sandwiches
+                </h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Egg Cheese Sandwich</h3>
+                        <p class="item-description">Fresh eggs with melted cheese</p>
+                    </div>
+                    <div class="item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Bacon Egg & Cheese</h3>
+                        <p class="item-description">Classic breakfast sandwich with crispy bacon</p>
+                    </div>
+                    <div class="item-price">$1.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Bologna</h3>
+                        <p class="item-description">Traditional deli-style bologna sandwich</p>
+                    </div>
+                    <div class="item-price">$2.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h3>Croque Monsieur</h3>
+                        <p class="item-description">French grilled ham and cheese</p>
+                    </div>
+                    <div class="item-price">$2.50</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Visit Us Today</h3>
+            <p>Open Daily: 6:00 AM - 10:00 PM</p>
+            <p>123 Coffee Street, Brew City | (555) 123-BREW</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(44, 24, 16, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(44, 24, 16, 0.95)';
+            }
+        });
+
+        // Intersection Observer for menu items animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe menu categories
+        document.querySelectorAll('.menu-category').forEach(category => {
+            category.style.opacity = '0';
+            category.style.transform = 'translateY(30px)';
+            category.style.transition = 'all 0.6s ease';
+            observer.observe(category);
+        });
+
+        // Add hover effects to menu items
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Dynamic coffee bean animation
+        function createCoffeeBeans() {
+            const floatingElements = document.querySelector('.floating-elements');
+            
+            setInterval(() => {
+                if (document.querySelectorAll('.coffee-bean').length < 8) {
+                    const bean = document.createElement('div');
+                    bean.className = 'coffee-bean';
+                    bean.innerHTML = '<i class="fas fa-circle fa-1x"></i>';
+                    bean.style.left = Math.random() * 100 + '%';
+                    bean.style.top = Math.random() * 100 + '%';
+                    bean.style.animationDelay = Math.random() * 6 + 's';
+                    floatingElements.appendChild(bean);
+                    
+                    setTimeout(() => {
+                        bean.remove();
+                    }, 12000);
+                }
+            }, 3000);
+        }
+
+        // Initialize animations
+        createCoffeeBeans();
+
+        // Add parallax effect to hero section
+        window.addEventListener('scr
